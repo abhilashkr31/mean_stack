@@ -24,10 +24,18 @@
                 #content="ngModel"></textarea>
             <mat-error *ngIf="content.invalid">Please enter a valid Content</mat-error>
         </mat-form-field>
-        <button
-            color='primary'
-            mat-raised-button
-            type="submit">Save</button>
+        <div>
+            <button
+                color='primary'
+                mat-raised-button
+                type="submit">Save</button>
+            <button
+                mat-raised-button type="button"
+                class="image_button"
+                (click)="filePicker.click()">Pick Image</button>
+            <input type="file" #filePicker>
+        </div>
+        
     </form>
 </mat-card>
 <p>{{ newPost }}</p>
