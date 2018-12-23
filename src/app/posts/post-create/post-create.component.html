@@ -17,16 +17,20 @@
                 placeholder="Content"></textarea>
             <mat-error *ngIf="form.get('content').invalid">Please enter a valid Content</mat-error>
         </mat-form-field>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+            <img [src]="imagePreview" [alt]="form.value.title">
+        </div>
         <div>
             <button
                 color='primary'
                 mat-raised-button
-                type="submit">Save</button>
+                type="submit" float:left>Save</button>
             <button
                 mat-raised-button type="button"
                 class="image_button"
-                (click)="filePicker.click()">Pick Image</button>
-            <input type="file" #filePicker>
+                (click)="filePicker.click()">
+                Pick Image</button>
+            <input type="file" #filePicker (change)="onImagePicked($event)">
         </div>
         
     </form>
