@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
         cb(error, "backend/images/");
     },
     filename: (req, file, cb) => {
-        const name = file.originalname.toLowerCase().split('').join('-');
+        const name = file.originalname.toLowerCase().split(' ').join('-');
         const ext = MIME_TYPE_MAP[file.mimetype];
         cb(null, name + '-' + Date.now() + '.' + ext);
     }
@@ -70,6 +70,7 @@ router.get("", (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
     const postQuery = Post.find();
+    let fetchedPosts;
     if (pageSize && currentPage) {
         postQuery
             .skip(pageSize * (currentPage - 1))
@@ -77,10 +78,15 @@ router.get("", (req, res, next) => {
     }
     postQuery
         .then(posts => {
-            console.log(posts);
+            fetchedPosts = posts;
+            return Post.count();
+        })
+        .then(count => {
+            console.log(fetchedPosts);
             res.status(200).json({
                 message: "Posts fetched successfully",
-                posts: posts
+                posts: fetchedPosts,
+                maxPosts: count
             });
         });
 });
