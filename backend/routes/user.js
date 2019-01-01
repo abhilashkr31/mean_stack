@@ -36,6 +36,7 @@ router.post("/login", (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
+                console.log("I am here");
                 return res.status(401).json({
                     message: "Auth Failed"
                 });
@@ -45,6 +46,7 @@ router.post("/login", (req, res, next) => {
         })
         .then(result => {
             if (!result) {
+                console.log("I am here now");
                 return res.status(401).json({
                     message: "Auth Failed"
                 });
@@ -60,6 +62,7 @@ router.post("/login", (req, res, next) => {
             });
         })
         .catch(err => {
+            console.log("I am here and there");
             return res.status(401).json({
                 message: "Auth Failed"
             });
